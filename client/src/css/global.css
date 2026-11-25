@@ -1,0 +1,9 @@
+@import "tailwindcss";
+
+@layer base {
+
+    button,
+    a {
+        @apply cursor-pointer select-none;
+    }
+}
