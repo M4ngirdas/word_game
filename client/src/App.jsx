@@ -71,19 +71,18 @@ export default function App() {
             toast.error("word does not exist")
             return
         }
-
-        if (guess.slice(0, 1) !== currentWord.word.slice(0, 1) && currentWord.word.includes(guess.slice(0, 1))) {
-            setInputs(prev => prev.map(inputsArray => inputsArray.map(input => input.id === 1 ? { ...input, status: "wrongSpot" } : input)))
-            console.log("wrong spot")
-        }
-        else if (guess.slice(0, 1) === currentWord.word.slice(0, 1)) {
-            console.log("match")
-            setInputs(prev => prev.map(inputsArray => inputsArray.map(input => input.id === 1 ? { ...input, status: "matches" } : input)))
-        }
-        else {
-            console.log("no match")
-            setInputs(prev => prev.map(inputsArray => inputsArray.map(input => input.id === 1 ? { ...input, status: "noMatch" } : input)))
-        }
+        // if (guess.slice(0, i) !== currentWord.word.slice(0, i) && currentWord.word.includes(guess.slice(0, 1))) {
+        //     setInputs(prev => prev.map(inputsArray => inputsArray.map(input => input.id === i ? { ...input, status: "wrongSpot" } : input)))
+        //     console.log("wrong spot")
+        // }
+        // else if (letter.slice(index, i) === currentWord.word.slice(0, i)) {
+        //     console.log("match")
+        //     setInputs(prev => prev.map(inputsArray => inputsArray.map(input => input.id === i ? { ...input, status: "matches" } : input)))
+        // }
+        // else {
+        //     console.log("no match")
+        //     setInputs(prev => prev.map(inputsArray => inputsArray.map(input => input.id === i ? { ...input, status: "noMatch" } : input)))
+        // }
 
         if (inputs[0][4]?.value.length === 1 && currentRow === 1) setCurrentRow(2)
         if (inputs[1][4]?.value.length === 1 && currentRow === 2) setCurrentRow(3)
@@ -92,7 +91,15 @@ export default function App() {
     }
 
     function handleType(ev, id) {
-        setInputs(prev => prev.map(inputsArray => inputsArray.map(input => currentInputId === input.id ? { ...input, value: ev.target.value } : input)))
+        // setInputs(prev => prev.map(inputsArray => inputsArray.map(input => {
+        //     if (currentInputId === input.id) {
+        //         return { ...input, value: ev.target.value, status: ev.target.value  }
+        //     }
+        //     else {
+        //         return input
+        //     }
+        // })))
+        setInputs(prev => prev.map(inputsArray => inputsArray.map(input => currentInputId === input.id ? { ...input, value: ev.target.value, status: ev.target.value !== currentWord.word.slice(currentInputId - 1, currentInputId) && currentWord.word.includes(ev.target.value) ? "wrongSpot" : ev.target.value === currentWord.word.slice(currentInputId - 1, currentInputId) ? "matches" : "noMatch" } : input)))
         inputRefs.current[id + 1]?.focus()
     }
 
